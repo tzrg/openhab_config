@@ -1,0 +1,34 @@
+
+rule "Process Envertec API Response"
+when
+    Item EnvertecQueryResult received update
+then
+    var String response = EnvertecQueryResult.state.toString
+    //var String response = '{"Status":"0","Result":null,"Data":{"QueryResults":[{"GATEWAYALIAS":"94001463","GATEWAYSN":"94001463","SNALIAS":"12508424","SN":"12508424","DCVOLTAGE":"21.37","ACVOLTAGE":"234.95","ACCURRENCY":"0","POWER":"0.02","FREQUENCY":"49.98","DAYENERGY":"1.07","ENERGY":"509.96","TEMPERATURE":"20.09","SITETIME":"9/13/2024 7:52:23 PM","MGMERR":"200","MGSERR":"0","MGMVER":"102","MGSVER":"24","STATIONID":null,"STATUS":"0","SNID":"2F55AFD38AA8445A9F87540EB8046DAE"},{"GATEWAYALIAS":"94001463","GATEWAYSN":"94001463","SNALIAS":"12508425","SN":"12508425","DCVOLTAGE":"21.04","ACVOLTAGE":"235.88","ACCURRENCY":"0","POWER":"0","FREQUENCY":"49.98","DAYENERGY":"1","ENERGY":"513.45","TEMPERATURE":"19.8","SITETIME":"9/13/2024 7:52:23 PM","MGMERR":"200","MGSERR":"0","MGMVER":"102","MGSVER":"24","STATIONID":null,"STATUS":"0","SNID":"2D8CF83C843942A6AE9C9BC34DE0FB85"},{"GATEWAYALIAS":"94001463","GATEWAYSN":"94001463","SNALIAS":"12508426","SN":"12508426","DCVOLTAGE":"21.54","ACVOLTAGE":"235.48","ACCURRENCY":"0","POWER":"0","FREQUENCY":"49.98","DAYENERGY":"1.01","ENERGY":"482.89","TEMPERATURE":"21","SITETIME":"9/13/2024 7:52:23 PM","MGMERR":"200","MGSERR":"0","MGMVER":"102","MGSVER":"24","STATIONID":null,"STATUS":"0","SNID":"21F6110249F44F8F802F1C4DA39440C9"},{"GATEWAYALIAS":"94001463","GATEWAYSN":"94001463","SNALIAS":"12508427","SN":"12508427","DCVOLTAGE":"21.05","ACVOLTAGE":"236.08","ACCURRENCY":"0","POWER":"0","FREQUENCY":"49.99","DAYENERGY":"0.77","ENERGY":"431.56","TEMPERATURE":"20","SITETIME":"9/13/2024 7:52:23 PM","MGMERR":"200","MGSERR":"0","MGMVER":"102","MGSVER":"24","STATIONID":null,"STATUS":"0","SNID":"3F0CE9DB797947E286C8C13D0D5F5BAC"}],"PageNumber":1,"PerPage":20,"TotalPage":1,"TotalCount":4,"Lan":"en-us"}}'
+    if (response === NULL || response.length() == 0) {
+        logError("EnvertecAPI", "Received empty response")
+        return
+    }
+    TestOutput.postUpdate("Processing!")
+
+    //var QueryResults = transform("JSONPATH", "$.Data.QueryResults", response)
+    
+    //TestOutput.postUpdate("Processing ! QueryResults: " + QueryResults)
+
+    for (var i = 0; i < 4; i++) {
+  
+        //var powerMatch = module.matchesRegex('.*"POWER":"([0-9.]+)".*')
+        var powerMatch = transform("JSONPATH", "$.Data.QueryResults[" + i + "].POWER", response)
+        TestOutput.postUpdate("powermatch for i=" + i + " " + powerMatch)
+        var power = Float.parseFloat(powerMatch)
+        TestOutput.postUpdate("power for i=" + i + " " + power)
+    
+        switch (i) {
+            case 0: EnvertecPower1.postUpdate(power)
+            case 1: EnvertecPower2.postUpdate(power)
+            case 2: EnvertecPower3.postUpdate(power)
+            case 3: EnvertecPower4.postUpdate(power)
+        }
+    
+    }
+end

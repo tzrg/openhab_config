@@ -1,0 +1,52 @@
+sitemap sens label="Sensors" icon="presence" {
+    Frame label="GPIO Sensors" {
+        Text item=GPIO_Temperature label="Temperatur: [%s Grad]"
+        Text item=GPIO_Humidity label="Luftfeuchtigkeit: [%s Prozent]"
+    }
+    Frame label="Slider Wohnzimmer" {
+        Slider item=LEDWohnzimmer_LevelControl
+    }
+    Frame label="Zigbee Sensors" {
+        Text item=TemperatureAndHumiditySensor1_Temperature label="Temperatur Sensor 1: [%.1f °C]"
+        Text item=TemperatureAndHumiditySensor1_Humidity label="Luftfeuchtigkeit Sensor 1: [%.1f Prozent]"
+        Text item=TemperatureAndHumiditySensor2_Temperature label="Temperatur Sensor 2: [%.1f °C]"
+        Text item=TemperatureAndHumiditySensor2_Humidity label="Luftfeuchtigkeit 2 Sensor 2: [%.1f Prozent]"
+    }
+
+    
+    Frame label="envertec PV Data"{
+        Switch item=EnvertecManualUpdate label="Trigger API Request"
+        //Text item=TestOutput label="TestOutput"
+        //Text item=EnvertecQueryResult label="Raw API Response"
+        Text item=EnvertecPower1 label="Power Module 1"
+        Text item=EnvertecPower2 label="Power Module 2"
+        Text item=EnvertecPower3 label="Power Module 3"
+        Text item=EnvertecPower4 label="Power Module 4"
+    }
+
+    Frame label="Electric Summary"{
+        //Text item=TestOutput label="TestOutput"
+        //Text item=EnvertecQueryResult label="Raw API Response"
+        Text item=Generic_MQTT_Thing_tasmota_counter_pos label="Verbrauch Summe [%.1f kWh]"
+        Text item=Generic_MQTT_Thing_tasmota_counter_neg label="Einspeisung Summe [%.1f kWh]"
+        Text item=Generic_MQTT_Thing_tasmota_power label="Power Momemtan [%.1f W]"
+    }
+    
+
+    Frame label="Plugs" {
+        Switch item=OSRAMPlug01_Switch label="Lampe Arbeitszimmer" mappings=[ON="An", OFF="Aus"]
+        Switch item=OSRAMPlug02_Switch label="Waschkeller" mappings=[ON="An", OFF="Aus"]
+        Switch item=OSRAMPlug03_Switch label="Lueftung Keller" mappings=[ON="An", OFF="Aus"]
+        Switch item=OSRAMPlug04_Switch label="Wohnzimmer" mappings=[ON="An", OFF="Aus"]
+    }
+
+    Frame{ Webview height=10
+       url="http://192.168.178.52:3000/dashboard-solo/db/humidity-and-temperature-log?panelId=4"
+       //url="http://192.168.178.52:3000/d/R3LYqFmRz/humidity-and-temperature-log?orgId=1&viewPanel=2"
+    }
+
+    Frame{ Webview height=10
+       url="http://192.168.178.52:3000/dashboard-solo/db/humidity-and-temperature-log?panelId=2"
+    }
+}
+

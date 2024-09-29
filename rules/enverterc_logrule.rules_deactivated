@@ -1,0 +1,7 @@
+
+//rule "Log Envertec API Request"
+//when
+//    Item EnvertecQueryTrigger received command
+//then
+//    logInfo("EnvertecAPI", "Sending request to Envertec API with payload: " + receivedCommand.toString.replaceAll("\\s+", " "))
+//end

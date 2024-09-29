@@ -1,0 +1,19 @@
+//Thing http:url:envertecapi "Envertec API" [ baseURL="https://www.envertecportal.com" ] {
+//    Channels:
+//        Type string : queryTerminalReal "Query Terminal Real" [
+//            method="PUT",
+//            contentType="application/json",
+//            url="/ApiInverters/QueryTerminalReal",
+//            headers="Content-Type=application/json",
+//            commandTransformation="JS:({
+//                'page': '1',
+//                'perPage': '20',
+//                'orderBy': 'SNALIAS',
+//                'whereCondition': '{\"STATIONID\": \"538D21E396F744C4827067A5348B3A8F\"}'
+//            })",
+//            stateTransformation="JSONPATH:$.Data.QueryResults[*]",
+//            refreshInterval=300
+//        ]
+//}
+
+

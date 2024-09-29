@@ -1,0 +1,2 @@
+/usr/bin/python2 /etc/openhab2/scripts/temp.py
+/usr/bin/python2 /etc/openhab2/scripts/hum.py

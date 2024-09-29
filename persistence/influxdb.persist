@@ -1,0 +1,13 @@
+Strategies {
+everyMinute : "0 * * * * ?"
+everyHour : "0 0 * * * ?"
+everyDay : "0 0 0 * * ?"
+every2Minutes : "0 */2 * ? * *"
+}
+ 
+Items {
+    TemperatureAndHumiditySensor1_Temperature,TemperatureAndHumiditySensor2_Temperature,TemperatureAndHumiditySensor1_Humidity,TemperatureAndHumiditySensor2_Humidity,GPIO_Temperature,GPIO_Humidity: strategy = everyChange , everyHour
+    EnvertecPower1,EnvertecPower2,EnvertecPower3, EnvertecPower4: strategy = everyChange, everyMinute
+    Generic_MQTT_Thing_tasmota_counter_pos,Generic_MQTT_Thing_tasmota_counter_neg,Generic_MQTT_Thing_tasmota_power: strategy = everyChange,everyMinute
+    OSRAMPlug01_Switch,OSRAMPlug02_Switch,OSRAMPlug03_Switch,OSRAMPlug04_Switch: strategy = everyMinute
+}

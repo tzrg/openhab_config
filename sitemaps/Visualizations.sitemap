@@ -1,0 +1,18 @@
+sitemap sens label="Visualizations" icon="presence" {
+
+    
+
+    Frame{ Webview height=10
+       url="http://192.168.178.52:3000/d/R3LYqFmRz/humidity-and-temperature-log?viewPanel=2&orgId=1&from=now-12h&to=now&kiosk"
+    }
+    Frame{ Webview height=10
+       url="http://192.168.178.52:3000/d/R3LYqFmRz/humidity-and-temperature-log?viewPanel=5&orgId=1&from=now-12h&to=now&kiosk"
+    }
+   Frame{ Webview height=10
+       url="http://192.168.178.52:3000/d/R3LYqFmRz/humidity-and-temperature-log?viewPanel=7&orgId=1&from=now-12h&to=now&kiosk"
+    }
+   Frame{ Webview height=10
+      url="http://192.168.178.52:3000/d/R3LYqFmRz/humidity-and-temperature-log?viewPanel=4&orgId=1&from=now-12h&to=now&kiosk"
+   }
+}
+

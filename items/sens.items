@@ -1,0 +1,1 @@
+Dimmer  LED_Wohnzimmer  "Dimmer  [%.1f]"  <hue>  (gLights)  {hue="3;brightness"}

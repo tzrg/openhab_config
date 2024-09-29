@@ -1,0 +1,54 @@
+//rule "switch plug 01 on and off"
+//    when
+//        Item TemperatureAndHumiditySensor1_Humidity > 46
+//    then
+//        postUpdate(OSRAMPlug01_Switch, OFF)
+//    end
+var Timer plug3Timer = null
+
+rule "Humidity switch"
+when 
+    //Time cron "0/0 0/1 * * * ?"
+    Item TemperatureAndHumiditySensor1_Humidity changed
+then
+    var Hum = TemperatureAndHumiditySensor1_Humidity.state as Number
+    
+    if ( Hum >= 72 ){
+        logInfo("logging rule","Humidity is " + Hum.toString + ". It is above limit")
+        if( OSRAMPlug03_Switch.state.toString == "ON" ) {
+            logInfo("Humidity switch","Ventilation is already running")
+        } else {
+            // first check if enough time has passed from last change of state.
+            if(OSRAMPlug03_Switch.lastUpdate.minusMinutes(15).isBefore(now)  ){
+                logInfo("Humidity switch","Switching ON")
+                OSRAMPlug03_Switch.sendCommand(ON)
+                OSRAMPlug03_Switch.persist
+                if(plug3Timer === null){
+                    // create a timer to switch off after 15 minutes.
+                    // since i check for timer === null before, the timer will not be reset.
+                    plug3Timer = createTimer(now.plusMinutes(15)) [| 
+                        OSRAMPlug03_Switch.sendCommand(OFF)
+                        OSRAMPlug03_Switch.persist
+                        plug3Timer = null
+                    ]
+                }
+            }else{
+                logInfo("Humidity switch","Last change of state of the plug is too young, not switching on.")
+            }
+        }
+    } else if(Hum < 70) {
+        if(OSRAMPlug03_Switch.state.toString == "ON"){
+            logInfo("Humidity switch","Humidity low enough, switching off")
+            OSRAMPlug03_Switch.sendCommand(OFF)
+            OSRAMPlug03_Switch.persist
+            // in case there was a timer, clean up..
+            plug3Timer = null
+        } else{
+            logInfo("Humidity switch","Nothing to do.")
+        }
+    }
+end
+
+
+
+

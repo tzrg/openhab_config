@@ -1,0 +1,3 @@
+Thing exec:command:temp [command="/usr/bin/python2 /etc/openhab2/scripts/temp.py", interval=30, autorun=true]
+Thing exec:command:hum [command="/usr/bin/python2 /etc/openhab2/scripts/hum.py", interval=30, autorun=true]
+

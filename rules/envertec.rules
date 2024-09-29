@@ -1,0 +1,23 @@
+rule "Manually Update Envertec Data"
+when
+    Item EnvertecManualUpdate changed from OFF to ON
+then
+    var String url = "https://www.envertecportal.com/ApiInverters/QueryTerminalReal"
+    var String contentType="application/json"
+    var String content =  "{\"page\": \"1\", \"perPage\": \"20\", \"orderBy\": \"SNALIAS\", \"whereCondition\": \'{\"STATIONID\": \"538D21E396F744C4827067A5348B3A8F\"}\'}"
+    var String QueryResult = sendHttpPostRequest(url,contentType,content,60000)
+    EnvertecQueryResult.postUpdate(QueryResult)
+    EnvertecManualUpdate.postUpdate(OFF)
+end
+
+
+rule "Automatically Update Enverted Data"
+when
+    Time cron "0 * * * * ?"
+then
+    var String url = "https://www.envertecportal.com/ApiInverters/QueryTerminalReal"
+    var String contentType="application/json"
+    var String content =  "{\"page\": \"1\", \"perPage\": \"20\", \"orderBy\": \"SNALIAS\", \"whereCondition\": \'{\"STATIONID\": \"538D21E396F744C4827067A5348B3A8F\"}\'}"
+    var String QueryResult = sendHttpPostRequest(url,contentType,content,60000)
+    EnvertecQueryResult.postUpdate(QueryResult)
+end

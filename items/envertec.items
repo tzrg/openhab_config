@@ -1,0 +1,10 @@
+String EnvertecQueryResult "Envertec Query Result [%s]" 
+
+Number EnvertecPower1 "Power Module 1 [%.2f W]"
+Number EnvertecPower2 "Power Module 2 [%.2f W]"
+Number EnvertecPower3 "Power Module 3 [%.2f W]"
+Number EnvertecPower4 "Power Module 4 [%.2f W]"
+
+Switch EnvertecManualUpdate "Update Envertec Data"
+
+String TestOutput "TestOutput [%s]" 

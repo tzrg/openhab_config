@@ -1,0 +1,4 @@
+//-----Strings read from DHT22 temp/humidity sensor-----//
+String GPIO_Humidity "Humidity [%.1f]" {channel="exec:command:hum:output"}
+String GPIO_Temperature "Temperature [%.1f]" {channel="exec:command:temp:output"}
+
